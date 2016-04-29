@@ -1,158 +1,202 @@
 import java.util.Random;
 
 public class SortingAlgorithms {
-	
+
 	// Var1 1000/10000/100000/1000000
 	// Var2 10/100/1000/10000/100000/1000000
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		Random rand = new Random();
-		
-		int[] var1 = {1000,10000,100000,1000000};
-		int[] var2 = {100,100,1000,10000,100000,1000000};
+
+		int[] var1 = { 1000, 10000, 100000, 1000000 };
+		int[] var2 = { 10, 100, 1000, 10000, 100000, 1000000 };
 		int count = 0;
-		
-		
-		///*
+
+		/// *
 		int choice = 1;
-		
-		
-		while(choice < 6){
-			for(int i = 0; i < var1.length; ++i){
-				System.out.println(var1[i]+": ArraySize\n");
-				for (int j = 0; j<var2.length; ++j){
-					
-					int[] list = new int[var1[i]];
-					//Random rand = new Random(var2[j]);
-					for (int k = 0; k < list.length; ++k) {
-						list[k] = rand.nextInt(var2[j]);
-					}
-					
-					long initTime = System.currentTimeMillis();
-					System.out.print("Rand(0 - "+(var2[j]-1)+"): ");
-					//System.out.print((count%24+1) + ":");
-					choice(choice,list);
-					long finalTime = System.currentTimeMillis();
-					System.out.println(finalTime - initTime);
-					++count;
-				}
-				System.out.println();
-			}
-			System.out.println("\n---\tNEW SORT\t---\n");
-			
-			++choice;
-		}
-		/*
-		*/
-		System.out.println("\n---\tNEW SORT\t---\n");
-		/*
-		///Radix Sort
-		for(int i = 0; i < var1.length; ++i){
-			System.out.println(var1[i]+": ArraySize\n");
-			for (int j = 0; j < var2.length; ++j){
-				 
+
+		// counting sort.
+
+		for (int i = 0; i < var1.length; ++i) {
+			System.out.println(var1[i] + ": ArraySize\n");
+			for (int j = 0; j < var2.length; ++j) {
+
 				int[] list = new int[var1[i]];
-				
 				for (int k = 0; k < list.length; ++k) {
 					list[k] = rand.nextInt(var2[j]);
 				}
-				
+
 				long initTime = System.currentTimeMillis();
-				System.out.print("Rand(0 - "+(var2[j]-1)+"): ");
-				System.out.print("radixSort: ");
-				
-				radixSort(list,j+1);
-				
-				long finalTime = System.currentTimeMillis();
-				System.out.println(finalTime - initTime);
-				++count;
-			}
-		}
-		*/
-		//counting sort.
-		/*
-		for(int i = 0; i < var1.length; ++i){
-			System.out.println(var1[i]+": ArraySize\n");
-			for (int j = 0; j < var2.length; ++j){
-				 
-				int[] list = new int[var1[i]];
-				//Random rand = new Random(var2[j]);
-				for (int k = 0; k < list.length; ++k) {
-					list[k] = rand.nextInt(var2[j] );
-				}
-				
-				long initTime = System.currentTimeMillis();
-				System.out.print("Rand(0 - "+(var2[j]-1)+"): ");
-				System.out.print("Selecton Sort: ");
-				
-				quickSort(list);
-				
+				System.out.print("Rand(0 - " + (var2[j] - 1) + "): ");
+				System.out.print("CountingSort: ");
+
+				countingSort(list, var2[j]);
+
 				long finalTime = System.currentTimeMillis();
 				System.out.println(finalTime - initTime);
 				++count;
 			}
 			System.out.println();
-		}*/
-		// heap sort
-		/*
-		int[] list = new int[1000000];
-	
-		for (int i = 0; i < list.length; ++i) {
-			list[i] = rand.nextInt(100);
 		}
 
+		while (choice < 6) {
+			for (int i = 0; i < var1.length; ++i) {
+				System.out.println(var1[i] + ": ArraySize\n");
+				for (int j = 0; j < var2.length; ++j) {
+
+					try {
+
+						int[] list = new int[var1[i]];
+
+						for (int k = 0; k < list.length; ++k) {
+							list[k] = rand.nextInt(var2[j]);
+						}
+
+						long initTime = System.currentTimeMillis();
+						System.out.print("Rand(0 - " + (var2[j] - 1) + "): ");
+						// System.out.print((count%24+1) + ":");
+						choice(choice, list);
+						long finalTime = System.currentTimeMillis();
+						System.out.println(finalTime - initTime);
+						++count;
+
+					} catch (StackOverflowError e) {
+						System.out.println("Stack overflow Error");
+					}
+
+				}
+				System.out.println();
+			}
+			System.out.println("\n---\tNEW SORT\t---\n");
+
+			++choice;
+		}
+
+		/*
+		*/
+		System.out.println("\n---\tNEW SORT\t---\n");
+
+		/// Radix Sort
+		for (int i = 0; i < var1.length; ++i) {
+			System.out.println(var1[i] + ": ArraySize\n");
+			for (int j = 0; j < var2.length; ++j) {
+
+				int[] list = new int[var1[i]];
+
+				for (int k = 0; k < list.length; ++k) {
+					list[k] = rand.nextInt(var2[j]);
+				}
+
+				long initTime = System.currentTimeMillis();
+				System.out.print("Rand(0 - " + (var2[j] - 1) + "): ");
+				System.out.print("radixSort: ");
+
+				radixSort(list, j + 1);
+
+				long finalTime = System.currentTimeMillis();
+				System.out.println(finalTime - initTime);
+				++count;
+			}
+		}
+
+		// counting sort.
+
+		for (int i = 0; i < var1.length; ++i) {
+			System.out.println(var1[i] + ": ArraySize\n");
+			for (int j = 0; j < var2.length; ++j) {
+
+				int[] list = new int[var1[i]];
+				for (int k = 0; k < list.length; ++k) {
+					list[k] = rand.nextInt(var2[j]);
+				}
+
+				long initTime = System.currentTimeMillis();
+				System.out.print("Rand(0 - " + (var2[j] - 1) + "): ");
+				System.out.print("CountingSort: ");
+
+				countingSort(list, var2[j]);
+
+				long finalTime = System.currentTimeMillis();
+				System.out.println(finalTime - initTime);
+				++count;
+			}
+			System.out.println();
+		}
+
+	}
+
+	// Bubble Sort, Selection Sort, Insertion Sort, Heap Sort, Merge Sort,
+	// Quick Sort, Counting Sort, and Radix Sort
+
+	// heap. radix. counting.
+
+	public void heapSort() {
+		Random rand = new Random();
+		int[] var1 = { 1000, 10000, 100000, 1000000 };
+		int[] var2 = { 10, 100, 1000, 10000, 100000, 1000000 };
+		// heap sort
 		long initTime = System.currentTimeMillis();
-		quickSort(list);
+
+		ArrayHeap<Integer> ah = new ArrayHeap<Integer>();
+
+		for (int i = 0; i < var1.length; ++i) {
+			System.out.println(var1[i] + ": ArraySize\n");
+			for (int j = 0; j < var2.length; ++j) {
+
+				int[] list = new int[var1[i]];
+
+				for (int i = 0; i < list.length; ++i) {
+					//
+					list[i] = rand.nextInt(10);
+				}
+
+				for (int x : list) {
+					ah.add(x);
+				}
+				Integer[] list2 = ah.getSortedContents(new Integer[] {});
+				for (int k = 0; k < list.length; ++k) {
+					list[k] = list2[k];
+				}
+			}
+		}
 		long finalTime = System.currentTimeMillis();
 
 		System.out.println(finalTime - initTime);
-		*/
-				
+
 	}
-	
-	//Bubble Sort, Selection Sort, Insertion Sort, Heap Sort, Merge Sort,
-	//Quick Sort, Counting Sort, and Radix Sort
-	
-	//heap. radix. counting.
-	
-	public static void choice(int n, int[] numbers){
-		 switch(n){
-		 case 1:
-			 System.out.print("quickSort: ");
-			 quickSort(numbers);
-			 break;
-		 case 2: 
-			 System.out.print("mergeSort: ");
-			 mergeSort(numbers);
-			 break;
-		 case 3:
-			 System.out.print("countingSort: ");
-			 countingSort(numbers);
-			 break;
-		 case 4:
-			 System.out.print("insertionSort: ");
-			 insertionSort(numbers);
-			 break;
-		 case 5:
-			 System.out.print("selectionSort: ");
-			 selectionSort(numbers);
-			 break;
-		 case 6:
-			 System.out.print("bubbleSort: ");
-			 bubbleSort(numbers);
-			 break;
-		 }
-		 
+
+	public static void choice(int n, int[] numbers) {
+		switch (n) {
+		case 1:
+			System.out.print("quickSort: ");
+			quickSort(numbers);
+			break;
+		case 2:
+			System.out.print("mergeSort: ");
+			mergeSort(numbers);
+			break;
+		case 3:
+			System.out.print("insertionSort: ");
+			insertionSort(numbers);
+			break;
+		case 4:
+			System.out.print("selectionSort: ");
+			selectionSort(numbers);
+			break;
+		case 5:
+			System.out.print("bubbleSort: ");
+			bubbleSort(numbers);
+			break;
+		}
+
 	}
-	
-	
-	
-	public static int[] countingSort(int[] numbers) {
-		int[] counter = new int[100000000];
+
+	public static int[] countingSort(int[] numbers, int n) {
+		int[] counter = new int[n];
 		int[] result = new int[numbers.length];
 
 		for (int i = 0; i < numbers.length; ++i) {
-			 ++counter[numbers[i]];
+			++counter[numbers[i]];
 		}
 
 		for (int i = 1; i < counter.length; ++i) {
@@ -166,19 +210,18 @@ public class SortingAlgorithms {
 		return result;
 	}
 
-	
 	public static int[] radixSort(int[] numbers, int radix) {
 		int[] result = numbers;
-		
+
 		for (int pos = 1; pos <= radix; ++pos) {
 			result = modCountingSort(result, pos);
 		}
-		
+
 		return result;
 	}
-	
+
 	private static int getDigit(int number, int pos) {
-		int pow = (int)Math.pow(10, pos);
+		int pow = (int) Math.pow(10, pos);
 		int rem = number % pow;
 		return rem / (pow / 10);
 	}
@@ -195,7 +238,7 @@ public class SortingAlgorithms {
 			counter[i] += counter[i - 1];
 		}
 
-		for (int i = result.length-1; i >= 0; --i) {
+		for (int i = result.length - 1; i >= 0; --i) {
 			result[--counter[getDigit(numbers[i], pos)]] = numbers[i];
 		}
 
@@ -296,12 +339,12 @@ public class SortingAlgorithms {
 
 		for (int i = 0; i < numbers.length - 1; ++i) {
 			int minIndex = i;
-			//System.out.println("still here");
+			// System.out.println("still here");
 			for (int j = i + 1; j < numbers.length; ++j) {
 				if (numbers[j] < numbers[minIndex])
 					minIndex = j;
 			}
-			//System.out.println("still here");
+			// System.out.println("still here");
 			swap(numbers, minIndex, i);
 		}
 
@@ -313,7 +356,7 @@ public class SortingAlgorithms {
 			for (int j = i; j > 0; --j) {
 				if (numbers[j] < numbers[j - 1]) {
 					swap(numbers, j, j - 1);
-					//System.out.print("still here");
+					// System.out.print("still here");
 				} else {
 					break;
 				}
